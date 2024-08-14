@@ -185,6 +185,9 @@ LD_PRELOAD=$PRJHOME/mpk-library/build/libmpk.so ./signal-9123367a9386d186 --benc
 * Function Cloning: Rather than using function cloning, we use thread-local variables to pass along the unsafe/safe allocation flag among function calls.
 * External function wrapping: TRust modifies the function calls at the LLVM backend. We change this and use a wrapper call provided in mpk-library/rust-lib. This makes (dis)enabling MPK permissions easier (TRust struggles to recover registers used by MPK).
 
+## Warning for users:
+This work is not production ready, please do not use it in production software. This is merely a prototype, and if you wish to adopt these concepts for production, please pay attention to the comments in the MetaSafe implementations. For example, we do not explicitly implement the validate function for some smart pointers and leave it to the user to decide on the valid state of the smart pointers. Also, some smart pointers like Rc<T> and Arc<T> require you to wrap the data field in a pointer pointing to memory in the regular data compartment. Because Rc itself is not mutable outside the allocator or smart pointer domain, this is okay for MetaSafe, but IT IS NOT GOOD PRACTICE to mix user data with metadata, and that's the message that MetaSafe is trying to put out there.  
+
 ## Authors
 - Martin Kayondo (Seoul National University) <kymartin@sor.snu.ac.kr>
 - Inyoung Bang (Seoul National University) <iybang@sor.snu.ac.kr>
