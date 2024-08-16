@@ -230,6 +230,8 @@ pub struct Arc<T: ?Sized> {
 impl<T: ?Sized> MetaUpdate for Arc<T> {
     fn synchronize(&self) {
         //synchronize for Arc
+        // for this we actually synchronize arch-inner.
+        // should also synchronize the ptr to ensure it's valid.
     }
 }
 
@@ -289,6 +291,7 @@ pub struct Weak<T: ?Sized> {
 impl<T: ?Sized> MetaUpdate for Weak<T> {
     fn synchronize(&self) {
         //synchronize Weak?
+        // ensure ptr in valid.
     }
 }
 
@@ -327,6 +330,7 @@ struct ArcInner<T: ?Sized> {
 impl<T: ?Sized> MetaUpdate for ArcInner<T> {
     fn synchronize(&self) {
         //ArcInner needs to be synchronized same way as Rc
+        // make sure that strong and weak are not zero.
     }
 }
 
